@@ -1,0 +1,111 @@
+﻿@inject HttpClient Http
+
+<div class="videoplay-container">
+    @if (videoInfo != null)
+    {
+        <div class="videoplay-content">
+            <MudPaper Elevation="4" Class="p-6 mb-6 w-100 text-center">
+                <MudText Typo="Typo.h4" GutterBottom="true">@videoInfo.titulo</MudText>
+                @if (!string.IsNullOrEmpty(videoInfo.image))
+                {
+                    <MudImage Src="@videoInfo.image" Alt="Imagem do informativo" Class="mb-4 rounded" Style="max-width:100%;height:auto;" />
+                }
+                <MudText Typo="Typo.body1" Class="mb-2">@videoInfo.descricao</MudText>
+                <MudText Typo="Typo.caption" Color="Color.Secondary">@videoInfo.data</MudText>
+            </MudPaper>
+            <MudPaper Elevation="2" Class=" justify-center align-center p-4 w-100" Style="background:#f9f9f9;">
+                <MudText><b>Vídeo</b></MudText>
+                <br/>
+                <iframe src="@URLVideo"
+                        title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        class="youtube-embed-container-iframe">
+                </iframe>
+            </MudPaper>
+        </div>
+    }
+    else
+    {
+        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="mb-4" />
+        <MudText>Carregando...</MudText>
+    }
+</div>
+
+<style>
+    .videoplay-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2rem;
+    }
+
+    .videoplay-content {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .videoplay-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .videoplay-descricao {
+        margin: 1rem 0;
+        color: #333;
+    }
+
+    .videoplay-data {
+        color: #888;
+        font-size: 0.95rem;
+    }
+
+    .youtube-embed-container {
+        display : block;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+        background: #f9f9f9;
+        padding: 2rem 0;
+        width: 100%;
+    }
+
+    .youtube-embed-container-iframe {
+        border-radius: 8px;
+        width: 100%;
+        height: 50vh;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
+</style>
+
+@code {
+    Data.VideoInfo videoInfo { get; set; }
+    [Parameter]
+	public string URLInfo { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        videoInfo = await Http.GetFromJsonAsync<Data.VideoInfo>(Utils.CorsProxy.GetFullUrl(URLInfo));
+        ShouldRender();
+    }
+    public string URLVideo
+    {
+        get
+        {
+            var embedurl = "https://www.youtube.com/embed/";
+            if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.url))
+            {
+                return embedurl + videoInfo.url + "?enablejsapi=1";
+            }
+            return string.Empty;
+        }
+    }
+}
