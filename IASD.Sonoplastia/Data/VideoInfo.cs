@@ -1,10 +1,15 @@
 ﻿namespace IASD.Sonoplastia.Data;
-
+using System.Text.Json.Serialization;
 public class VideoInfo
 {
-    public string? titulo { get; set; }
-    public string? image { get; set; }
-    public string? descricao { get; set; }
-    public string? url { get; set; }
-    public string? data { get; set; }
+    [JsonPropertyName("titulo")]
+    public string? Titulo { get; set; }
+    [JsonPropertyName("image")]
+    public string? Image { get; set; }
+    [JsonPropertyName("descricao")]
+    public string? Descricao { get; set; }
+    [JsonPropertyName("url")]
+    public string? Url { get; set; }
+    [JsonPropertyName("data")]
+    public string? Data { get; set; }
 }
