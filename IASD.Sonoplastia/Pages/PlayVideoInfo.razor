@@ -1,30 +1,45 @@
 ﻿@inject HttpClient Http
 
+
+
 <div class="videoplay-container">
-    @if (videoInfo != null)
+    @if (videoInfos != null)
     {
-        <div class="videoplay-content">
-            <MudPaper Elevation="4" Class="p-6 mb-6 w-100 text-center">
-                <MudText Typo="Typo.h4" GutterBottom="true">@videoInfo.Titulo</MudText>
-                @if (!string.IsNullOrEmpty(videoInfo.Image))
-                {
-                    <MudImage Src="@videoInfo.Image" Alt="Imagem do informativo" Class="mb-4 rounded" Style="max-width:100%;height:auto;" />
-                }
-                <MudText Typo="Typo.body1" Class="mb-2">@videoInfo.Descricao</MudText>
-                <MudText Typo="Typo.caption" Color="Color.Secondary">@videoInfo.Data</MudText>
-            </MudPaper>
-            <MudPaper Elevation="2" Class=" justify-center align-center p-4 w-100">
-                <MudText Class="pt-2"><b>Vídeo</b></MudText>
-                <br/>
-                <iframe src="@URLVideo"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                        class="youtube-embed-container-iframe">
-                </iframe>
-            </MudPaper>
-        </div>
+        <MudSelect @bind-Value="videoSelected" Class="mb-2" Modal="true" FullWidth="true">
+            @foreach (var videoInfo in videoInfos)
+            {
+                <MudSelectItem Value="videoInfo">@videoInfo.Titulo</MudSelectItem>
+            }
+        </MudSelect>
+        @if (videoSelected == null)
+        {
+            <MudText Color="Color.Error">Nenhum vídeo selecionado.</MudText>
+        } else
+        {
+            <div class="videoplay-content">
+                <MudPaper Elevation="4" Class="p-6 mb-6 w-100 text-center">
+                    <MudText Typo="Typo.h4" GutterBottom="true">@videoSelected.Titulo</MudText>
+                    @if (!string.IsNullOrEmpty(videoSelected.Image?.Url))
+                    {
+                        <MudImage Src="@videoSelected.Image.Url" Alt="Imagem do informativo" Class="mb-4 rounded" Style="max-width:100%;height:auto;" />
+                    }
+                    <MudText Typo="Typo.body1" Class="mb-2">@videoSelected.Descricao</MudText>
+                    <MudText Typo="Typo.caption" Color="Color.Secondary">@videoSelected.Data</MudText>
+                </MudPaper>
+                <MudPaper Elevation="2" Class=" justify-center align-center p-4 w-100">
+                    <MudText Class="pt-2"><b>Vídeo</b></MudText>
+                    <br />
+                    <iframe src="@URLVideo"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            class="youtube-embed-container-iframe">
+                    </iframe>
+                </MudPaper>
+            </div>
+        }
+        
     }
     else
     {
@@ -35,22 +50,23 @@
 
 
 @code {
-    Data.VideoInfo videoInfo { get; set; }
+    Data.VideoInfo[] videoInfos { get; set; }
+    Data.VideoInfo? videoSelected { get; set; }
     [Parameter]
 	public string URLInfo { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        videoInfo = await Http.GetFromJsonAsync<Data.VideoInfo>(Utils.CorsProxy.GetFullUrl(URLInfo));
+        videoInfos = await Http.GetFromJsonAsync<Data.VideoInfo[]>(Utils.CorsProxy.GetFullUrl(URLInfo));
+		videoSelected = videoInfos?.FirstOrDefault();
         ShouldRender();
     }
     public string URLVideo
     {
         get
         {
-            var embedurl = "https://www.youtube.com/embed/";
-            if (videoInfo != null && !string.IsNullOrEmpty(videoInfo.Url))
+            if (videoInfos != null)
             {
-                return embedurl + videoInfo.Url + "?enablejsapi=1";
+                return videoSelected.Url?.Url ?? string.Empty;
             }
             return string.Empty;
         }

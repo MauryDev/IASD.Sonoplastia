@@ -1,6 +1,6 @@
 ﻿namespace IASD.Sonoplastia.Utils;
 
-public class CorsProxy
+public static class CorsProxy
 {
     public static string GetFullUrl(string url)
     {
