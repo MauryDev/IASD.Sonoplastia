@@ -3,12 +3,25 @@
     "titulo": "Uma comunidade com fé",
     "image": {
       "type": "img_yt",
-      "href": "https://img.youtube.com/vi/POeRiGZIS0Y/maxresdefault.jpg"
+      "href": "POeRiGZIS0Y"
     },
-    "descricao": "Gast�n come�ou a usar drogas na adolesc�ncia, mas sua vida mudou ao conhecer Silvia, que o incentivou a deixar o v�cio. Juntos, encontraram acolhimento na Igreja Adventista, onde estudos b�blicos e o apoio de membros e l�deres os ajudaram a crescer espiritualmente. Mesmo enfrentando reca�das e dificuldades financeiras, Gast�n reencontrou seu prop�sito atrav�s do cuidado da igreja e da f� em Deus. Hoje, ele � ativo na igreja, vivendo uma rela��o transformadora com Deus, reconhecendo que tudo o que tem � uma d�diva divina.",
+    "descricao": "Gastón começou a usar drogas na adolescência, mas sua vida mudou ao conhecer Silvia, que o incentivou a deixar o vício. Juntos, encontraram acolhimento na Igreja Adventista, onde estudos bíblicos e o apoio de membros e líderes os ajudaram a crescer espiritualmente. Mesmo enfrentando recaídas e dificuldades financeiras, Gastón reencontrou seu propósito através do cuidado da igreja e da fé em Deus. Hoje, ele é ativo na igreja, vivendo uma relação transformadora com Deus, reconhecendo que tudo o que tem é uma dádiva divina.",
     "url": {
       "type": "yt",
       "href": "POeRiGZIS0Y"
+    },
+    "data": "31-05-2025"
+  },
+  {
+    "titulo": "Uma comunidade com fé (LIBRAS)",
+    "image": {
+      "type": "img_yt",
+      "href": "jGtvDKkw8dE"
+    },
+    "descricao": "Gastón começou a usar drogas na adolescência, mas sua vida mudou ao conhecer Silvia, que o incentivou a deixar o vício. Juntos, encontraram acolhimento na Igreja Adventista, onde estudos bíblicos e o apoio de membros e líderes os ajudaram a crescer espiritualmente. Mesmo enfrentando recaídas e dificuldades financeiras, Gastón reencontrou seu propósito através do cuidado da igreja e da fé em Deus. Hoje, ele é ativo na igreja, vivendo uma relação transformadora com Deus, reconhecendo que tudo o que tem é uma dádiva divina.",
+    "url": {
+      "type": "yt",
+      "href": "jGtvDKkw8dE"
     },
     "data": "31-05-2025"
   }
