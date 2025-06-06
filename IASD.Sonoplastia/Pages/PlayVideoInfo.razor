@@ -29,13 +29,14 @@
                 <MudPaper Elevation="2" Class=" justify-center align-center p-4 w-100">
                     <MudText Class="pt-2"><b>Vídeo</b></MudText>
                     <br />
-                    <iframe src="@URLVideo"
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen
-                            class="youtube-embed-container-iframe">
-                    </iframe>
+                     <iframe src="@URLVideo"
+                         title="YouTube video player"
+                         frameborder="0"
+                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                         referrerpolicy="strict-origin-when-cross-origin"
+                         allowfullscreen
+                        class="youtube-embed-container-iframe"/>
+                    
                 </MudPaper>
             </div>
         }
@@ -56,7 +57,7 @@
 	public string URLInfo { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        videoInfos = await Http.GetFromJsonAsync<Data.VideoInfo[]>(Utils.CorsProxy.GetFullUrl(URLInfo));
+        videoInfos = await Http.GetFromJsonAsync<Data.VideoInfo[]>(URLInfo);
 		videoSelected = videoInfos?.FirstOrDefault();
         ShouldRender();
     }
