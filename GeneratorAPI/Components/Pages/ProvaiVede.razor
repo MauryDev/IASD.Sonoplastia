@@ -1,0 +1,49 @@
+﻿@page "/provaivede"
+@inject ISnackbar Snackbar
+<div class="mt-2">
+	<MudButton Href="/" Color="Color.Info" Variant="Variant.Filled" Class="ma-2">Voltar</MudButton>
+	@for (var i = 0; i < 2; i++)
+	{
+		var e = i;
+		<MudText Class="ms-2">Vídeo n° @(e + 1)</MudText>
+		<VideoInfo @bind-videoInfo="videoInfo[e]" />
+	}
+</div>
+
+
+<div class="ma-2">
+	<MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="Save">Salvar</MudButton>
+	<MudButton Variant="Variant.Filled" Color="Color.Dark" OnClick="Load">Carregar</MudButton>
+
+</div>
+
+@code {
+	static string PathAPI = "api/Provai_e_Vede.json";
+	static Data.VideoInfo[] CreateArray() => Enumerable.Range(0, 2).Select(_ => new Data.VideoInfo()).ToArray();
+
+	Data.VideoInfo[] videoInfo = CreateArray();
+	void Save()
+	{
+
+		File.WriteAllText(PathAPI, System.Text.Json.JsonSerializer.Serialize(videoInfo));
+		Snackbar.Add("Salvo com sucesso", Severity.Success);
+	}
+	void Load()
+	{
+		if (File.Exists(PathAPI))
+		{
+			var json = File.ReadAllText(PathAPI);
+			videoInfo = System.Text.Json.JsonSerializer.Deserialize<Data.VideoInfo[]>(json) ?? CreateArray();
+			Snackbar.Add("Carregado com sucesso", Severity.Success);
+
+			StateHasChanged();
+		}
+		else
+		{
+			Snackbar.Add("Houve um erro ao carregar o arquivo", Severity.Error);
+
+			videoInfo = CreateArray();
+		}
+	}
+
+}

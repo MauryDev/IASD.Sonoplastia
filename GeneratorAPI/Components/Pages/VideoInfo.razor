@@ -1,0 +1,31 @@
+﻿<MudPaper Outlined="true" class="ms-2 me-2 pa-2">
+	<MudTextField Label="Título" T="string" @bind-Text="videoInfo.Titulo" ValueChanged="OnVideoInfoChanged" />
+	<br />
+	<MudTextField Label="Descrição" T="string" @bind-Text="videoInfo.Descricao" ValueChanged="OnVideoInfoChanged" />
+	<br />
+	<MudTextField Label="Url do vídeo" T="string" Text="@(videoInfo.Url?.Href ?? string.Empty)" TextChanged="OnTextVideo" />
+	<br />
+	<MudTextField Label="Data" T="string" @bind-Text="videoInfo.Data" ValueChanged="OnVideoInfoChanged" />
+	<br />
+</MudPaper>
+
+
+@code {
+	[Parameter]
+	public Data.VideoInfo videoInfo { get; set; }
+	async void OnTextVideo(string text)
+	{
+		videoInfo.Url ??= new() { Type = "yt", Href = "" };
+		videoInfo.Url.Href = text;
+		videoInfo.Image ??= new() { Type = "img_yt", Href = "" };
+		videoInfo.Image.Href = text;
+		await OnVideoInfoChanged();
+	}
+	async Task OnVideoInfoChanged()
+	{
+		await videoInfoChanged.InvokeAsync(videoInfo);
+
+	}
+	[Parameter]
+	public EventCallback<Data.VideoInfo> videoInfoChanged { get; set; }
+}

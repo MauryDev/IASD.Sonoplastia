@@ -1,0 +1,41 @@
+﻿@page "/informativo"
+<div class="mt-2">
+    <MudButton Href="/" Color="Color.Info" Variant="Variant.Filled" Class="ma-2">Voltar</MudButton>
+
+	@for (var i = 0; i < 5; i++)
+	{
+		var e = i;
+        <MudText Class="ms-2">Vídeo n° @(e+1)</MudText>
+
+		<VideoInfo @bind-videoInfo="videoInfo[e]" />
+	}
+</div>
+
+
+<MudButton Variant="Variant.Filled" Color="Color.Dark" Class="ms-2 mt-2" OnClick="Save">Salvar</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Dark" Class="ms-2 mt-2" OnClick="Load">Carregar</MudButton>
+
+@code {
+    static string PathAPI = "api/Informativo.json";
+
+    static Data.VideoInfo[] CreateArray() => Enumerable.Range(0, 5).Select(_ => new Data.VideoInfo()).ToArray();
+
+    Data.VideoInfo[] videoInfo = CreateArray();
+    void Save()
+    {
+        File.WriteAllText(PathAPI, System.Text.Json.JsonSerializer.Serialize(videoInfo));
+    }
+    void Load()
+    {
+        if (File.Exists(PathAPI))
+        {
+            var json = File.ReadAllText(PathAPI);
+            videoInfo = System.Text.Json.JsonSerializer.Deserialize<Data.VideoInfo[]>(json) ?? CreateArray();
+            StateHasChanged();
+        }
+        else
+        {
+            videoInfo = CreateArray();
+        }
+    }
+}
