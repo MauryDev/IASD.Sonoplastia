@@ -1,4 +1,6 @@
 ﻿@page "/informativo"
+@inject ISnackbar Snackbar
+
 <div class="mt-2">
     <MudButton Href="/" Color="Color.Info" Variant="Variant.Filled" Class="ma-2">Voltar</MudButton>
 
@@ -24,6 +26,8 @@
     void Save()
     {
         File.WriteAllText(PathAPI, System.Text.Json.JsonSerializer.Serialize(videoInfo));
+        		Snackbar.Add("Salvo com sucesso", Severity.Success);
+
     }
     void Load()
     {
@@ -31,11 +35,16 @@
         {
             var json = File.ReadAllText(PathAPI);
             videoInfo = System.Text.Json.JsonSerializer.Deserialize<Data.VideoInfo[]>(json) ?? CreateArray();
+            Snackbar.Add("Carregado com sucesso", Severity.Success);
+
             StateHasChanged();
+
         }
         else
         {
             videoInfo = CreateArray();
+            Snackbar.Add("Houve um erro ao carregar o arquivo", Severity.Error);
+
         }
     }
 }

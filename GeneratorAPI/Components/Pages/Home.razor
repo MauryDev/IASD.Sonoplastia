@@ -1,4 +1,7 @@
 ﻿@page "/"
+@using System.Diagnostics
+@using LibGit2Sharp
+@using LibGit2Sharp.Handlers
 
 <PageTitle>Home</PageTitle>
 
@@ -6,5 +9,38 @@
 <div class="ms-2">
 	<MudButton Href="/provaivede" Variant="Variant.Filled" Color="Color.Tertiary">Provai e Vede</MudButton>
 	<MudButton Href="/informativo" Variant="Variant.Filled" Color="Color.Tertiary">Informativo</MudButton>
-
+	<MudButton OnClick="SaveGithub" Variant="Variant.Filled" Color="Color.Tertiary">Salvar no github</MudButton>
 </div>
+
+@code {
+	async Task SaveGithub()
+	{
+		try
+		{
+			var psi = new ProcessStartInfo
+			{
+				FileName = "cmd.exe",
+				Arguments = "/c cd .. && git add GeneratorAPI/api/* && git commit -m \"Add\" && git push github-maurydev master",
+				RedirectStandardOutput = true,
+				RedirectStandardError = true,
+				UseShellExecute = false,
+				CreateNoWindow = true
+			};
+
+			using var process = new Process { StartInfo = psi };
+			process.Start();
+			string output = await process.StandardOutput.ReadToEndAsync();
+			string error = await process.StandardError.ReadToEndAsync();
+			process.WaitForExit();
+
+			// Exibir saída ou erro conforme necessário
+			Console.WriteLine(output);
+			if (!string.IsNullOrEmpty(error))
+				Console.WriteLine(error);
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Erro ao executar comando git: {ex.Message}");
+		}
+	}
+}
