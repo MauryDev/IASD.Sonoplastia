@@ -1,11 +1,11 @@
-# IASD.Sonoplastia# IASD.Sonoplastia
+Ôªø# IASD.Sonoplastia# IASD.Sonoplastia
 
-IASD.Sonoplastia È uma soluÁ„o Blazor WebAssembly desenvolvida em .NET 9 para gerenciamento e automaÁ„o de sonoplastia em eventos da Igreja Adventista do SÈtimo Dia.
+IASD.Sonoplastia √© uma solu√ß√£o Blazor WebAssembly desenvolvida em .NET 9 para gerenciamento e automa√ß√£o de sonoplastia em eventos da Igreja Adventista do S√©timo Dia.
 
 ## Funcionalidades
 
 - Interface web moderna e responsiva (Blazor WebAssembly)
-- Informativo Mundial das missıes em v·rios idiomas
+- Informativo Mundial das miss√µes em v√°rios idiomas
 - Provai e vede com e sem libras
 ## Tecnologias Utilizadas
 
@@ -16,23 +16,23 @@ IASD.Sonoplastia È uma soluÁ„o Blazor WebAssembly desenvolvida em .NET 9 para ge
 ## Como Executar
 
 1. Instale o [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-2. Clone este repositÛrio:
+2. Clone este reposit√≥rio:
 3. Execute o projeto Blazor WebAssembly:
 4. Acesse `http://localhost:5000` no navegador.
 
 ## Testes
 
 Execute os testes automatizados com:
-## ContribuiÁ„o
+## Contribui√ß√£o
 
-ContribuiÁıes s„o bem-vindas! Siga os passos abaixo:
+Contribui√ß√µes s√£o bem-vindas! Siga os passos abaixo:
 
-1. Fork este repositÛrio
+1. Fork este reposit√≥rio
 2. Crie uma branch (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas alteraÁıes (`git commit -am 'Adiciona nova funcionalidade'`)
+3. Commit suas altera√ß√µes (`git commit -am 'Adiciona nova funcionalidade'`)
 4. Push para a branch (`git push origin feature/nova-funcionalidade`)
 5. Abra um Pull Request
 
-## LicenÁa
+## Licen√ßa
 
-Este projeto est· licenciado sob a licenÁa MIT.
+Este projeto est√° licenciado sob a licen√ßa MIT.
