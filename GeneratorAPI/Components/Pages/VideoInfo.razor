@@ -1,12 +1,13 @@
 ﻿<MudPaper Outlined="true" class="ms-2 me-2 pa-2">
 	<MudTextField Label="Título" T="string" @bind-Text="videoInfo.Titulo" ValueChanged="OnVideoInfoChanged" />
 	<br />
-	<MudTextField Label="Descrição" T="string" @bind-Text="videoInfo.Descricao" ValueChanged="OnVideoInfoChanged" />
+	<MudTextField Lines="2" Label="Descrição" T="string" @bind-Text="videoInfo.Descricao" ValueChanged="OnVideoInfoChanged" />
 	<br />
-	<MudTextField Label="Url do vídeo" T="string" Text="@(videoInfo.Url?.Href ?? string.Empty)" TextChanged="OnTextVideo" />
+	<MudTextField Label="Url do vídeo" T="string" Text="@(videoInfo.Url?.Href ?? string.Empty)" ValueChanged="OnTextVideo" />
 	<br />
 	<MudTextField Label="Data" T="string" @bind-Text="videoInfo.Data" ValueChanged="OnVideoInfoChanged" />
 	<br />
+	<MudButton OnClick="PickInfoYoutube">Pegar no youtube</MudButton>
 </MudPaper>
 
 
@@ -25,6 +26,20 @@
 	{
 		await videoInfoChanged.InvokeAsync(videoInfo);
 
+	}
+	async Task PickInfoYoutube()
+	{
+		if (videoInfo.Url?.Href is null or "")
+			return;
+
+		YoutubeExplode.YoutubeClient client = new();
+		var video = await client.Videos.GetAsync(videoInfo.Url.Url);
+
+		videoInfo.Titulo = video.Title;
+		videoInfo.Descricao = video.Description;
+		videoInfo.Data = video.UploadDate.ToString("dd-MM-yyyy");
+		videoInfo.Image ??= new() { Type = "img_yt", Href = videoInfo.Url.Href};
+		await OnVideoInfoChanged();
 	}
 	[Parameter]
 	public EventCallback<Data.VideoInfo> videoInfoChanged { get; set; }

@@ -21,7 +21,7 @@ public class VideoInfo
                 return Type switch
                 {
                     "yt" => $"https://www.youtube.com/embed/{Href}",
-                    "img_yt" => $"https://img.youtube.com/vi/{Href}/maxresdefault.jpg",
+                    "img_yt" => $"https://img.youtube.com/vi/{Href}/sddefault.jpg",
                     "dl" => $"https://www.daniellocutor.com.br/wp-content/uploads/{Href}",
                     _ => Href,
                 };
